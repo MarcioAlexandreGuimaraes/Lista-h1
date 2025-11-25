@@ -1,0 +1,41 @@
+public class CursoRepository : ICursoRepository
+{
+    private readonly List<Curso> _cursos = new();
+    private int _nextId = 1;
+
+    public Curso GetById(int id)
+    {
+        return _cursos.FirstOrDefault(c => c.IdCurso == id);
+    }
+
+    public IEnumerable<Curso> GetAll()
+    {
+        return _cursos;
+    }
+
+    public void Add(Curso curso)
+    {
+        curso.IdCurso = _nextId++;
+        _cursos.Add(curso);
+    }
+
+    public void Update(Curso curso)
+    {
+        var existing = GetById(curso.IdCurso);
+        if (existing != null)
+        {
+            existing.Nome = curso.Nome;
+            existing.NomeCoordenador = curso.NomeCoordenador;
+            existing.Ativo = curso.Ativo;
+        }
+    }
+
+    public void Delete(int id)
+    {
+        var curso = GetById(id);
+        if (curso != null)
+        {
+            _cursos.Remove(curso);
+        }
+    }
+}
