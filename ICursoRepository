@@ -1,0 +1,8 @@
+public interface ICursoRepository
+{
+    Curso GetById(int id);
+    IEnumerable<Curso> GetAll();
+    void Add(Curso curso);
+    void Update(Curso curso);
+    void Delete(int id);
+}
