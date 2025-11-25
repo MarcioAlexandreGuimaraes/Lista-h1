@@ -1,0 +1,38 @@
+public class MatriculaRepository : IMatriculaRepository
+{
+    private readonly List<Matricula> _matriculas = new();
+
+    public Matricula GetById(int idAluno, int idCurso)
+    {
+        return _matriculas.FirstOrDefault(m => m.IdAluno == idAluno && m.IdCurso == idCurso);
+    }
+
+    public IEnumerable<Matricula> GetAll()
+    {
+        return _matriculas;
+    }
+
+    public void Add(Matricula matricula)
+    {
+        _matriculas.Add(matricula);
+    }
+
+    public void Update(Matricula matricula)
+    {
+        var existing = GetById(matricula.IdAluno, matricula.IdCurso);
+        if (existing != null)
+        {
+            existing.DataMatricula = matricula.DataMatricula;
+            existing.Ativa = matricula.Ativa;
+        }
+    }
+
+    public void Delete(int idAluno, int idCurso)
+    {
+        var matricula = GetById(idAluno, idCurso);
+        if (matricula != null)
+        {
+            _matriculas.Remove(matricula);
+        }
+    }
+}
