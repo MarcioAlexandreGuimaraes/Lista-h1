@@ -1,0 +1,8 @@
+public interface IMatriculaRepository
+{
+    Matricula GetById(int idAluno, int idCurso);
+    IEnumerable<Matricula> GetAll();
+    void Add(Matricula matricula);
+    void Update(Matricula matricula);
+    void Delete(int idAluno, int idCurso);
+}
