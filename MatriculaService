@@ -1,0 +1,48 @@
+public class MatriculaService : IMatriculaService
+{
+    private readonly IMatriculaRepository _matriculaRepository;
+    private readonly ICursoRepository _cursoRepository;
+
+    public MatriculaService(IMatriculaRepository matriculaRepository, ICursoRepository cursoRepository)
+    {
+        _matriculaRepository = matriculaRepository;
+        _cursoRepository = cursoRepository;
+    }
+
+    public Matricula GetMatricula(int idAluno, int idCurso)
+    {
+        return _matriculaRepository.GetById(idAluno, idCurso);
+    }
+
+    public IEnumerable<Matricula> GetAllMatriculas()
+    {
+        return _matriculaRepository.GetAll();
+    }
+
+    public void AddMatricula(Matricula matricula)
+    {
+        var curso = _cursoRepository.GetById(matricula.IdCurso);
+        if (curso == null || !curso.Ativo)
+        {
+            throw new InvalidOperationException("Curso não encontrado ou inativo");
+        }
+
+        var matriculaExistente = _matriculaRepository.GetById(matricula.IdAluno, matricula.IdCurso);
+        if (matriculaExistente != null)
+        {
+            throw new InvalidOperationException("Aluno já matriculado neste curso");
+        }
+
+        _matriculaRepository.Add(matricula);
+    }
+
+    public void UpdateMatricula(Matricula matricula)
+    {
+        _matriculaRepository.Update(matricula);
+    }
+
+    public void DeleteMatricula(int idAluno, int idCurso)
+    {
+        _matriculaRepository.Delete(idAluno, idCurso);
+    }
+}
