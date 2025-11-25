@@ -1,0 +1,34 @@
+public class CursoService : ICursoService
+{
+    private readonly ICursoRepository _cursoRepository;
+
+    public CursoService(ICursoRepository cursoRepository)
+    {
+        _cursoRepository = cursoRepository;
+    }
+
+    public Curso GetCurso(int id)
+    {
+        return _cursoRepository.GetById(id);
+    }
+
+    public IEnumerable<Curso> GetAllCursos()
+    {
+        return _cursoRepository.GetAll();
+    }
+
+    public void AddCurso(Curso curso)
+    {
+        _cursoRepository.Add(curso);
+    }
+
+    public void UpdateCurso(Curso curso)
+    {
+        _cursoRepository.Update(curso);
+    }
+
+    public void DeleteCurso(int id)
+    {
+        _cursoRepository.Delete(id);
+    }
+}
